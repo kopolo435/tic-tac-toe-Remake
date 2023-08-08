@@ -1,0 +1,25 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header{
+    background-color: gray;
+}
+
+main{
+    flex: 1;
+    background-color: aqua;
+    
+
+}
+
+footer{
+    background-color: bisque;
+}
