@@ -30,7 +30,8 @@ const displayController = (()=>{
     const cellsNodes = board.getElementsByClassName("cells");
 
     const updateCell = (cell,value)=>{
-        cell.textContent = value;
+        let pNode = cell.querySelector("p");
+        pNode.textContent = value
     }
 
     const updateBoard = (gameArray)=>{
