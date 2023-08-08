@@ -9,7 +9,9 @@ const gameBoard = (() => {
         gameArray = gameArray.map(mark => " ");
     }
 
-    return {updateGameArray,clearGameArray};
+    let getGameArray = () => gameArray;
+
+    return {updateGameArray,clearGameArray,getGameArray};
 })();
 
 const player = function (name,mark,computer){
@@ -31,7 +33,7 @@ const displayController = (()=>{
 
     const updateCell = (cell,value)=>{
         let pNode = cell.querySelector("p");
-        pNode.textContent = value
+        pNode.textContent = value;
     }
 
     const updateBoard = (gameArray)=>{
@@ -45,6 +47,6 @@ const displayController = (()=>{
     return {updateBoard};
     
 })();
-
+displayController.updateBoard(gameBoard.getGameArray());
 const player2 = player("samir","X",false);
 const player1 = player("alonso","0",false)
