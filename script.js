@@ -25,5 +25,25 @@ const player = function (name,mark,computer){
     })
 }
 
+const displayController = (()=>{
+    const board = document.getElementById("board");
+    const cellsNodes = board.getElementsByClassName("cells");
+
+    const updateCell = (cell,value)=>{
+        cell.textContent = value;
+    }
+
+    const updateBoard = (gameArray)=>{
+        Array.from(cellsNodes).forEach(cell =>{
+            let indexValue = gameArray[cell.getAttribute("data-index")];
+            updateCell(cell,indexValue);
+        })
+    }
+
+
+    return {updateBoard};
+    
+})();
+
 const player2 = player("samir","X",false);
 const player1 = player("alonso","0",false)
