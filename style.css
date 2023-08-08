@@ -35,6 +35,16 @@ main{
     font-size: 30px;
 }
 
+.cell{
+    background-color: coral;
+    padding: 10px;
+    width: 22px;
+}
+
+.cell p{
+    text-align: center;
+}
+
 footer{
     background-color: bisque;
 }
