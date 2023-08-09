@@ -50,7 +50,7 @@ const displayController = (()=>{
 
 
 const player2 = player("samir","X",false);
-const player1 = player("alonso","0",false)
+const player1 = player("alonso","0",false);
 
 const gameController = ((player1,player2,gameBoard,displayController)=>{
     let currentPlayer = player1;
@@ -63,3 +63,21 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
 
     return{playRoundPlayer};
 })(player1,player2,gameBoard,displayController);
+
+const cellsEventManager = ((gameController)=>{
+    const cellsList = document.getElementsByClassName("cells");
+
+    const createCellsEvent = (cell) =>{
+        cell.addEventListener("click", ()=>{
+            gameController.playRoundPlayer(cell.getAttribute("data-index"));
+        });
+    };
+
+    const assingCellsEvent = () =>{
+        Array.from(cellsList).forEach(cell =>{
+            createCellsEvent(cell);
+        });
+    };
+
+    return {assingCellsEvent};
+})(gameController);
