@@ -78,10 +78,11 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
                 if((boardArray[combination[0]] === boardArray[combination[1]])&&
                 (boardArray[combination[0]] === boardArray[combination[2]])
                 ){
-                    console.log(`${currentPlayer.getName()} has won`);
+                    return true
                 }
             }
         }
+        return false
     };
 
 
