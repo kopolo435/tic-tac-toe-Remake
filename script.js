@@ -62,11 +62,11 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
     const playRoundPlayer = (index) =>{
         gameBoard.updateGameArray(currentPlayer.getMark(),index);
         displayController.updateBoard(gameBoard.getGameArray());
-        checkGameState();
+        checkGameWin();
         currentPlayer = currentPlayer === player1 ? player2:player1;
     }
 
-    const checkGameState = ()=>{
+    const checkGameWin = ()=>{
         const winningCombinations = [
             [0,1,2],[3,4,5],[6,7,8], //Horizontal wins
             [0,3,6],[1,4,7],[2,5,8], //Vertical wins
@@ -84,6 +84,15 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
         }
         return false
     };
+
+    const checkGameDraw = ()=>{
+        const boardArray = gameBoard.getGameArray();
+        const checkEmptyCell = (cell) =>{
+            return cell=== "" ? true:false;
+        }
+        const condition = boardArray.find(checkEmptyCell)<0 ? true:false;
+        return condition;
+    }
 
 
     return{playRoundPlayer};
