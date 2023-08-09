@@ -62,8 +62,13 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
     const playRoundPlayer = (index) =>{
         gameBoard.updateGameArray(currentPlayer.getMark(),index);
         displayController.updateBoard(gameBoard.getGameArray());
-        checkGameWin();
-        currentPlayer = currentPlayer === player1 ? player2:player1;
+        if(checkGameWin()){
+            console.log(`El ganador es ${currentPlayer.getName()}`);
+        }
+        else if(checkGameDraw()){
+            console.log(`El juego termina como empate`);
+        }
+        else currentPlayer = currentPlayer === player1 ? player2:player1;
     }
 
     const checkGameWin = ()=>{
@@ -90,7 +95,8 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
         const checkEmptyCell = (cell) =>{
             return cell=== "" ? true:false;
         }
-        const condition = boardArray.find(checkEmptyCell)<0 ? true:false;
+        const hola = boardArray.find(checkEmptyCell);
+        const condition = boardArray.find(checkEmptyCell) === undefined ? true:false;
         return condition;
     }
 
