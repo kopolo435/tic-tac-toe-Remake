@@ -49,8 +49,8 @@ const displayController = (()=>{
 })();
 
 
-const player2 = player("samir","X",false);
-const player1 = player("alonso","0",false);
+const player1 = player("alonso","X",false);
+const player2 = player("samir","0",false);
 
 const gameController = ((player1,player2,gameBoard,displayController)=>{
     let currentPlayer = player1;
@@ -81,3 +81,5 @@ const cellsEventManager = ((gameController)=>{
 
     return {assingCellsEvent};
 })(gameController);
+
+cellsEventManager.assingCellsEvent();
