@@ -68,9 +68,12 @@ const cellsEventManager = ((gameController)=>{
     const cellsList = document.getElementsByClassName("cells");
 
     const createCellsEvent = (cell) =>{
-        cell.addEventListener("click", ()=>{
+        
+        const clickCellHandler = () =>{
             gameController.playRoundPlayer(cell.getAttribute("data-index"));
-        });
+            cell.removeEventListener("click", clickCellHandler);
+        };
+        cell.addEventListener("click", clickCellHandler);
     };
 
     const assingCellsEvent = () =>{
