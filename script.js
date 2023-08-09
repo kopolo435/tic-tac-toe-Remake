@@ -58,8 +58,28 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
     const playRoundPlayer = (index) =>{
         gameBoard.updateGameArray(currentPlayer.getMark(),index);
         displayController.updateBoard(gameBoard.getGameArray());
+        checkGameState();
         currentPlayer = currentPlayer === player1 ? player2:player1;
     }
+
+    const checkGameState = ()=>{
+        const winningCombinations = [
+            [0,1,2],[3,4,5],[6,7,8], //Horizontal wins
+            [0,3,6],[1,4,7],[2,5,8], //Vertical wins
+            [2,4,6],[0,4,8]          //Diagonal wins
+        ];
+        const boardArray = gameBoard.getGameArray();
+        for(const combination of winningCombinations){
+            if(boardArray[combination[0]]!== ""){
+                if((boardArray[combination[0]] === boardArray[combination[1]])&&
+                (boardArray[combination[0]] === boardArray[combination[2]])
+                ){
+                    console.log(`${currentPlayer.getName()} has won`);
+                }
+            }
+        }
+    };
+
 
     return{playRoundPlayer};
 })(player1,player2,gameBoard,displayController);
