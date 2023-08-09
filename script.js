@@ -48,6 +48,10 @@ const displayController = (()=>{
     
 })();
 
+
+const player2 = player("samir","X",false);
+const player1 = player("alonso","0",false)
+
 const gameController = ((player1,player2,gameBoard,displayController)=>{
     let currentPlayer = player1;
 
@@ -58,8 +62,4 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
     }
 
     return{playRoundPlayer};
-})
-
-displayController.updateBoard(gameBoard.getGameArray());
-const player2 = player("samir","X",false);
-const player1 = player("alonso","0",false)
+})(player1,player2,gameBoard,displayController);
