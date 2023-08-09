@@ -47,6 +47,19 @@ const displayController = (()=>{
     return {updateBoard};
     
 })();
+
+const gameController = ((player1,player2,gameBoard,displayController)=>{
+    let currentPlayer = player1;
+
+    const playRoundPlayer = (index) =>{
+        gameBoard.updateGameArray(currentPlayer.getMark(),index);
+        displayController.updateBoard(gameBoard.getGameArray());
+        currentPlayer = currentPlayer === player1 ? player2:player1;
+    }
+
+    return{playRoundPlayer};
+})
+
 displayController.updateBoard(gameBoard.getGameArray());
 const player2 = player("samir","X",false);
 const player1 = player("alonso","0",false)
