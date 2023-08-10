@@ -57,7 +57,11 @@ const displayController = (()=>{
         currentPlayerText.textContent = `Current Player: ${currentPlayer}`;
     }
 
-    return {updateBoard,changeCurrentPlayer};
+    const showEndingText = (endingText) =>{
+        const endingTextNode = document.getElementById("endingText");SVGAElement
+        endingTextNode.textContent = endingText;
+    }
+    return {updateBoard,changeCurrentPlayer,showEndingText};
     
 })();
 
@@ -123,11 +127,13 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
         gameBoard.updateGameArray(currentPlayer.getMark(),index);
         displayController.updateBoard(gameBoard.getGameArray());
         if(checkGameWin()){
-            console.log(`El ganador es ${currentPlayer.getName()}`);
+            let endingText =`El ganador es ${currentPlayer.getName()}`;
             cellsEventManager.removeCellsEvents(); //Elimina todos los eventos de los botones
+            displayController.showEndingText(endingText);
         }
         else if(checkGameDraw()){
-            console.log(`El juego termina como empate`);
+            let endingText = `El juego termina como empate`;
+            displayController.showEndingText(endingText);
         }
         else {
             currentPlayer = currentPlayer === player1 ? player2:player1;
