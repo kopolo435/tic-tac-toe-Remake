@@ -19,13 +19,16 @@ const gameBoard = (() => {
 const player = function (name,mark,computer){
 
     return Object.assign({
-        getName : () => {
-            return name
+        getName : function(){
+            return this.name
         },
         getMark : () =>{
             return mark
         },
-        computer : computer
+        setName : function(newName){
+            this.name = newName
+        },
+        computer : computer,
     })
 }
 
@@ -52,8 +55,37 @@ const displayController = (()=>{
 })();
 
 
-const player1 = player("alonso","X",false);
-const player2 = player("samir","0",false);
+let player1 = player("alonso","X",false);
+let player2 = player("samir","0",false);
+
+
+const pageController = (()=>{
+
+    const startGame = ()=>{
+        const startBtn = document.getElementById("startGame");
+        startBtn.addEventListener("click",(e)=>{
+            e.preventDefault();
+            setPlayer1Name();
+            setPlayer2Name();
+        })
+    }
+
+    const setPlayer1Name = ()=>{
+        const nameInput = document.getElementById("player1");
+        const nameText = nameInput.value === "" ? "Player1" : nameInput.value;
+        player1.setName(nameText);
+    }
+
+    const setPlayer2Name = ()=>{
+        const nameInput = document.getElementById("player2");
+        const nameText = nameInput.value === "" ? "Player2" : nameInput.value;
+        player2.setName(nameText);
+    }
+
+    return{startGame,setPlayer1Name};
+})();
+
+pageController.startGame();
 
 //Modulo encargado de controlar el juego
 const gameController = ((player1,player2,gameBoard,displayController)=>{
@@ -64,7 +96,7 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
         displayController.updateBoard(gameBoard.getGameArray());
         if(checkGameWin()){
             console.log(`El ganador es ${currentPlayer.getName()}`);
-            cellsEventManager.removeCellsEvents();
+            cellsEventManager.removeCellsEvents(); //Elimina todos los eventos de los botones
         }
         else if(checkGameDraw()){
             console.log(`El juego termina como empate`);
@@ -133,5 +165,3 @@ const cellsEventManager = ((gameController)=>{
 
     return {assingCellsEvent,removeCellsEvents};
 })(gameController);
-
-cellsEventManager.assingCellsEvent();
