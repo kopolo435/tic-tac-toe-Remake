@@ -12,6 +12,30 @@
     <header>
         <h1>Tic-Tac-Toe Game</h1>
     </header>
+    <div class="configuration">
+        <form action="" id="playersFormInfo">
+            <div class="playerInfo">
+                <label for="player1">
+                    <p>Name Player 1 (X)</p>
+                    <input type="text" name="player1" id="player1">
+                </label>
+                <label for="compuPlayer1">
+                    <input type="checkbox" name="compuPlayer1" id="compuPlayer1">
+                </label>
+            </div>
+            <div class="playerInfo">
+                <label for="player2">
+                    <p>Name Player 2 (0)</p>
+                    <input type="text" name="player2" id="player2">
+                </label>
+                <label for="compuPlayer2">
+                    <input type="checkbox" name="compuPlayer2" id="compuPlayer2">
+                </label>
+                <button id="startGame">Start Game</button>
+                <button id="restartGame">Restart Game</button>
+            </div>
+        </form>
+    </div>
     <main>
         <div id="board">
             <button class="cells" data-index="0">
