@@ -1,3 +1,6 @@
+const restartBtn = document.getElementById("restartGame");
+const startBtn = document.getElementById("startGame");
+
 //Modulo encargado de manipular el array que representa el tablero
 const gameBoard = (() => {
     let gameArray = ["","","","","","","","",""];
@@ -7,7 +10,7 @@ const gameBoard = (() => {
     }
 
     let clearGameArray = ()=>{
-        gameArray = gameArray.map(mark => " ");
+        gameArray = gameArray.map(mark => "");
     }
 
     let getGameArray = () => gameArray;
@@ -72,18 +75,20 @@ let player2 = player("0");
 
 const pageController = (()=>{
 
-    const startGame = ()=>{
+    const handleStartClick = () => {
+        setPlayer1Name();
+        setPlayer2Name();
+        setPlayer1Computer();
+        setPlayer2Computer();
+        setInitialPlayer(player1.getName());
+        cellsEventManager.assingCellsEvent();
+        restartBtn.disabled = false;
+    };
+
+    const startGame = () => {
         const startBtn = document.getElementById("startGame");
-        startBtn.addEventListener("click",(e)=>{
-            e.preventDefault();
-            setPlayer1Name();
-            setPlayer2Name();
-            setPlayer1Computer();
-            setPlayer2Computer();
-            setInitialPlayer(player1.getName());
-            cellsEventManager.assingCellsEvent();
-        })
-    }
+        startBtn.addEventListener("click", handleStartClick);
+    };
 
     const setInitialPlayer = (currentPlayer)=>{
         const currentPlayerText = document.getElementById("nameCurrentPlayer");
@@ -114,7 +119,7 @@ const pageController = (()=>{
         player2.setComputer(isComputer);
     }
 
-    return{startGame};
+    return{startGame,handleStartClick};
 })();
 
 
@@ -139,6 +144,9 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
             currentPlayer = currentPlayer === player1 ? player2:player1;
             displayController.changeCurrentPlayer(currentPlayer.getName());
         }
+    }
+    const setCurrentPlayer = (newCurrentPlayer)=>{
+        currentPlayer = newCurrentPlayer
     }
 
     const checkGameWin = ()=>{
@@ -171,7 +179,7 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
     }
 
 
-    return{playRoundPlayer};
+    return{playRoundPlayer,setCurrentPlayer};
 })(player1,player2,gameBoard,displayController);
 
 //Modulo encargado de los events de las cells
@@ -204,3 +212,13 @@ const cellsEventManager = ((gameController)=>{
 })(gameController);
 
 pageController.startGame();
+
+restartBtn.addEventListener("click",(e)=>{
+    e.preventDefault();
+    gameBoard.clearGameArray();
+    displayController.updateBoard(gameBoard.getGameArray());
+    cellsEventManager.removeCellsEvents();
+    cellsEventManager.assingCellsEvent();
+    gameController.setCurrentPlayer(player1);
+    pageController.handleStartClick();
+})
