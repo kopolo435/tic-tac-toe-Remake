@@ -65,3 +65,10 @@ footer{
     display: flex;
     gap: 5px;
 }
+
+#playersFormInfo button{
+    align-self: center;
+    justify-self: center;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
