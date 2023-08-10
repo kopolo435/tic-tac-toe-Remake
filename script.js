@@ -16,19 +16,22 @@ const gameBoard = (() => {
 })();
 
 //Factory Function para crear los objetos player
-const player = function (name,mark,computer){
+const player = function (mark){
 
     return Object.assign({
         getName : function(){
             return this.name
         },
-        getMark : () =>{
+        getMark : function(){
             return mark
         },
         setName : function(newName){
             this.name = newName
         },
-        computer : computer,
+        setComputer : function(isComputer){
+            this.computer = isComputer;
+        },
+        computer : this.computer,
     })
 }
 
@@ -55,8 +58,8 @@ const displayController = (()=>{
 })();
 
 
-let player1 = player("alonso","X",false);
-let player2 = player("samir","0",false);
+let player1 = player("X");
+let player2 = player("0");
 
 
 const pageController = (()=>{
@@ -67,6 +70,9 @@ const pageController = (()=>{
             e.preventDefault();
             setPlayer1Name();
             setPlayer2Name();
+            setPlayer1Computer();
+            setPlayer2Computer();
+            console.log(`${player1.computer}`)
         })
     }
 
@@ -80,6 +86,18 @@ const pageController = (()=>{
         const nameInput = document.getElementById("player2");
         const nameText = nameInput.value === "" ? "Player2" : nameInput.value;
         player2.setName(nameText);
+    }
+
+    const setPlayer1Computer = (player)=>{
+        const computerInput = document.getElementById("compuPlayer1");
+        const isComputer = computerInput.checked ? true : false;
+        player1.setComputer(isComputer);
+    }
+
+    const setPlayer2Computer = (player)=>{
+        const computerInput = document.getElementById("compuPlayer2");
+        const isComputer = computerInput.checked;
+        player2.setComputer(isComputer);
     }
 
     return{startGame,setPlayer1Name};
