@@ -64,6 +64,7 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
         displayController.updateBoard(gameBoard.getGameArray());
         if(checkGameWin()){
             console.log(`El ganador es ${currentPlayer.getName()}`);
+            cellsEventManager.removeCellsEvents();
         }
         else if(checkGameDraw()){
             console.log(`El juego termina como empate`);
@@ -108,12 +109,13 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
 const cellsEventManager = ((gameController)=>{
     const cellsList = document.getElementsByClassName("cells");
 
+    const clickCellHandler = function(){
+        gameController.playRoundPlayer(this.getAttribute("data-index"));
+        this.removeEventListener("click", clickCellHandler); //Cada evento solo se activa una vez
+    }
+
     const createCellsEvent = (cell) =>{
         
-        const clickCellHandler = () =>{
-            gameController.playRoundPlayer(cell.getAttribute("data-index"));
-            cell.removeEventListener("click", clickCellHandler); //Cada evento solo se activa una vez
-        };
         cell.addEventListener("click", clickCellHandler);
     };
 
@@ -123,7 +125,13 @@ const cellsEventManager = ((gameController)=>{
         });
     };
 
-    return {assingCellsEvent};
+    const removeCellsEvents = () =>{
+        Array.from(cellsList).forEach(cell =>{
+            cell.removeEventListener("click",clickCellHandler);
+        })
+    }
+
+    return {assingCellsEvent,removeCellsEvents};
 })(gameController);
 
 cellsEventManager.assingCellsEvent();
