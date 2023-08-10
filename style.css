@@ -48,3 +48,20 @@ main{
 footer{
     background-color: bisque;
 }
+
+#playersFormInfo{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.playerInfo{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.playerInfo label{
+    display: flex;
+    gap: 5px;
+}
