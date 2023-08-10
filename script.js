@@ -52,8 +52,12 @@ const displayController = (()=>{
         })
     }
 
+    const changeCurrentPlayer = (currentPlayer)=>{
+        const currentPlayerText = document.getElementById("nameCurrentPlayer");
+        currentPlayerText.textContent = `Current Player: ${currentPlayer}`;
+    }
 
-    return {updateBoard};
+    return {updateBoard,changeCurrentPlayer};
     
 })();
 
@@ -72,8 +76,14 @@ const pageController = (()=>{
             setPlayer2Name();
             setPlayer1Computer();
             setPlayer2Computer();
-            console.log(`${player1.computer}`)
+            setInitialPlayer(player1.getName());
+            cellsEventManager.assingCellsEvent();
         })
+    }
+
+    const setInitialPlayer = (currentPlayer)=>{
+        const currentPlayerText = document.getElementById("nameCurrentPlayer");
+        currentPlayerText.textContent = `Current Player: ${currentPlayer}`;
     }
 
     const setPlayer1Name = ()=>{
@@ -100,10 +110,10 @@ const pageController = (()=>{
         player2.setComputer(isComputer);
     }
 
-    return{startGame,setPlayer1Name};
+    return{startGame};
 })();
 
-pageController.startGame();
+
 
 //Modulo encargado de controlar el juego
 const gameController = ((player1,player2,gameBoard,displayController)=>{
@@ -119,7 +129,10 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
         else if(checkGameDraw()){
             console.log(`El juego termina como empate`);
         }
-        else currentPlayer = currentPlayer === player1 ? player2:player1;
+        else {
+            currentPlayer = currentPlayer === player1 ? player2:player1;
+            displayController.changeCurrentPlayer(currentPlayer.getName());
+        }
     }
 
     const checkGameWin = ()=>{
@@ -183,3 +196,5 @@ const cellsEventManager = ((gameController)=>{
 
     return {assingCellsEvent,removeCellsEvents};
 })(gameController);
+
+pageController.startGame();
