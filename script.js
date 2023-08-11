@@ -83,6 +83,9 @@ const pageController = (()=>{
         setInitialPlayer(player1.getName());
         cellsEventManager.assingCellsEvent();
         restartBtn.disabled = false;
+        if(player1.computer){
+            gameController.computerPlay();
+        }
     };
 
     const startGame = () => {
@@ -228,7 +231,7 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
     }
 
 
-    return{playRoundPlayer,setCurrentPlayer};
+    return{playRoundPlayer,setCurrentPlayer,computerPlay};
 })(player1,player2,gameBoard,displayController);
 
 pageController.startGame();
