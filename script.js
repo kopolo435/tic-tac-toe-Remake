@@ -82,6 +82,7 @@ const pageController = (()=>{
         setPlayer2Computer();
         setInitialPlayer(player1.getName());
         cellsEventManager.assingCellsEvent();
+        startBtn.disabled = true;
         restartBtn.disabled = false;
         if(player1.computer){
             gameController.computerPlay();
