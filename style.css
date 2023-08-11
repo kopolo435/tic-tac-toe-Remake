@@ -65,6 +65,13 @@ main{
     background-color: #EADBC8;
 }
 
+#playersFormInfo input{
+    background-color: #DAC0A3;
+    padding: 2px 5px;
+    color: #102C57;
+    font-size: 15px;
+}
+
 .buttonsContainer{
     display: grid;
     grid-template-columns: repeat(auto-fit,160px);
