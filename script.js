@@ -122,7 +122,39 @@ const pageController = (()=>{
     return{startGame,handleStartClick};
 })();
 
+//Modulo encargado de los events de las cells
+const cellsEventManager = (()=>{
+    const cellsList = document.getElementsByClassName("cells");
 
+    const clickCellHandler = function(){
+        gameController.playRoundPlayer(this.getAttribute("data-index"));
+        this.removeEventListener("click", clickCellHandler); //Cada evento solo se activa una vez
+    }
+
+    const createCellsEvent = (cell) =>{
+        
+        cell.addEventListener("click", clickCellHandler);
+    };
+
+    const assingCellsEvent = () =>{
+        Array.from(cellsList).forEach(cell =>{
+            createCellsEvent(cell);
+        });
+    };
+
+    const removeCellsEvents = () =>{
+        Array.from(cellsList).forEach(cell =>{
+            cell.removeEventListener("click",clickCellHandler);
+        })
+    }
+
+    const removeOneCellEvent = (index) =>{
+        const cell = cellsList[index];
+        cell.removeEventListener("click",clickCellHandler);
+    }
+
+    return {assingCellsEvent,removeCellsEvents,removeOneCellEvent};
+})();
 
 //Modulo encargado de controlar el juego
 const gameController = ((player1,player2,gameBoard,displayController)=>{
@@ -192,49 +224,12 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
         emptyOptions = emptyOptions.filter(tupla => tupla);
         playNumber = Math.floor(Math.random() * emptyOptions.length);
         playRoundPlayer(emptyOptions[playNumber]);
-    }
-
-    const deleteClickEvent = ()=>{
-
+        cellsEventManager.removeOneCellEvent(emptyOptions[playNumber]);
     }
 
 
     return{playRoundPlayer,setCurrentPlayer};
 })(player1,player2,gameBoard,displayController);
-
-//Modulo encargado de los events de las cells
-const cellsEventManager = (()=>{
-    const cellsList = document.getElementsByClassName("cells");
-
-    const clickCellHandler = function(){
-        gameController.playRoundPlayer(this.getAttribute("data-index"));
-        this.removeEventListener("click", clickCellHandler); //Cada evento solo se activa una vez
-    }
-
-    const createCellsEvent = (cell) =>{
-        
-        cell.addEventListener("click", clickCellHandler);
-    };
-
-    const assingCellsEvent = () =>{
-        Array.from(cellsList).forEach(cell =>{
-            createCellsEvent(cell);
-        });
-    };
-
-    const removeCellsEvents = () =>{
-        Array.from(cellsList).forEach(cell =>{
-            cell.removeEventListener("click",clickCellHandler);
-        })
-    }
-
-    const removeOneCellEvent = (index) =>{
-        const cell = cellsList[index];
-        cell.removeEventListener("click",clickCellHandler);
-    }
-
-    return {assingCellsEvent,removeCellsEvents};
-})();
 
 pageController.startGame();
 
