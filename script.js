@@ -176,7 +176,6 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
         const checkEmptyCell = (cell) =>{
             return cell=== "" ? true:false;
         }
-        const hola = boardArray.find(checkEmptyCell);
         const condition = boardArray.find(checkEmptyCell) === undefined ? true:false;
         return condition;
     }
@@ -195,12 +194,16 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
         playRoundPlayer(emptyOptions[playNumber]);
     }
 
+    const deleteClickEvent = ()=>{
+
+    }
+
 
     return{playRoundPlayer,setCurrentPlayer};
 })(player1,player2,gameBoard,displayController);
 
 //Modulo encargado de los events de las cells
-const cellsEventManager = ((gameController)=>{
+const cellsEventManager = (()=>{
     const cellsList = document.getElementsByClassName("cells");
 
     const clickCellHandler = function(){
@@ -225,8 +228,13 @@ const cellsEventManager = ((gameController)=>{
         })
     }
 
+    const removeOneCellEvent = (index) =>{
+        const cell = cellsList[index];
+        cell.removeEventListener("click",clickCellHandler);
+    }
+
     return {assingCellsEvent,removeCellsEvents};
-})(gameController);
+})();
 
 pageController.startGame();
 
