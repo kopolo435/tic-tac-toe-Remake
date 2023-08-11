@@ -11,7 +11,11 @@ body{
 
 header{
     background-color: gray;
+    display: flex;
+    padding: 5px;
+    justify-content: center;
 }
+
 
 main{
     flex: 1;
