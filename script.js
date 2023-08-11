@@ -143,6 +143,9 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
         else {
             currentPlayer = currentPlayer === player1 ? player2:player1;
             displayController.changeCurrentPlayer(currentPlayer.getName());
+            if(currentPlayer.computer){
+                computerPlay();
+            }
         }
     }
     const setCurrentPlayer = (newCurrentPlayer)=>{
@@ -176,6 +179,20 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
         const hola = boardArray.find(checkEmptyCell);
         const condition = boardArray.find(checkEmptyCell) === undefined ? true:false;
         return condition;
+    }
+
+    const computerPlay = ()=>{
+        let playNumber;
+        let loopCondition = true;
+        const boardArray = gameBoard.getGameArray();    
+        let emptyOptions = boardArray.map((option,index)=> {
+            if(option ===""){
+                return index;
+            }
+        });
+        emptyOptions = emptyOptions.filter(tupla => tupla);
+        playNumber = Math.floor(Math.random() * emptyOptions.length);
+        playRoundPlayer(emptyOptions[playNumber]);
     }
 
 
