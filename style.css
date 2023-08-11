@@ -93,3 +93,18 @@ footer{
     gap: 10px;
     padding: 10px 20px;
 }
+
+footer{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 5px;
+}
+
+footer a{
+    color: inherit;
+}
+
+footer a:visited{
+    color: inherit;
+}
