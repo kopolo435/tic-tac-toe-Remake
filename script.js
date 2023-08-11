@@ -225,8 +225,10 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
         }if(difficulty ===2){
             playNumber = bestComputerPlay(emptyOptions);
         }
-        playRoundPlayer(emptyOptions[playNumber]);
-        cellsEventManager.removeOneCellEvent(emptyOptions[playNumber]);
+        setTimeout(() => {
+            playRoundPlayer(emptyOptions[playNumber]);
+            cellsEventManager.removeOneCellEvent(emptyOptions[playNumber]);
+          }, 500);
     }
 
     const randomComputerPlay = (emptyOptions)=>{
