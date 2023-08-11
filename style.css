@@ -51,10 +51,16 @@ footer{
 
 #playersFormInfo{
     display: grid;
-    grid-template-columns: repeat(auto-fit,500px);
+    grid-template-columns: repeat(auto-fit,450px);
     grid-template-rows: 1fr auto;
     gap: 15px;
     padding: 20px;
+}
+
+.buttonsContainer{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,160px);
+    gap: 10px;
 }
 
 .playerInfo{
