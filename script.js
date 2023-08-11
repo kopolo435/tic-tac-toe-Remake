@@ -3,7 +3,7 @@ const startBtn = document.getElementById("startGame");
 
 //Modulo encargado de manipular el array que representa el tablero
 const gameBoard = (() => {
-    let gameArray = ["X","X","0","","X","","0","","0"];
+    let gameArray = ["","","","","","","","",""];
 
     let updateGameArray = (mark,index)=>{
         gameArray[index] = mark;
@@ -273,7 +273,6 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
                 return index;
             }
         });
-        emptyOptions = emptyOptions.filter(tupla => tupla);
         return emptyOptions;
     }
 
