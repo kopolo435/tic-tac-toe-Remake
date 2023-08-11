@@ -3,7 +3,7 @@ const startBtn = document.getElementById("startGame");
 
 //Modulo encargado de manipular el array que representa el tablero
 const gameBoard = (() => {
-    let gameArray = ["","","","","","","","",""];
+    let gameArray = ["X","X","0","","X","","0","","0"];
 
     let updateGameArray = (mark,index)=>{
         gameArray[index] = mark;
@@ -215,9 +215,58 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
         return condition;
     }
 
-    const computerPlay = ()=>{
+    const computerPlay = (difficulty)=>{
         let playNumber;
-        let loopCondition = true;
+        let emptyOptions  = getAvailablePlays();
+        difficulty = 2;
+        if(difficulty === 1){
+            playNumber = randomComputerPlay(emptyOptions);
+        }if(difficulty ===2){
+            playNumber = bestComputerPlay(emptyOptions);
+        }
+        playRoundPlayer(emptyOptions[playNumber]);
+        cellsEventManager.removeOneCellEvent(emptyOptions[playNumber]);
+    }
+
+    const randomComputerPlay = (emptyOptions)=>{
+        let playNumber;
+        playNumber = Math.floor(Math.random() * emptyOptions.length);
+        return playNumber;
+    }
+
+    const bestComputerPlay = (emptyOptions)=>{
+        let playNumber = -1;
+        const winningCombinations = [
+            [0,1,2],[3,4,5],[6,7,8], //Horizontal wins
+            [0,3,6],[1,4,7],[2,5,8], //Vertical wins
+            [2,4,6],[0,4,8]          //Diagonal wins
+        ];
+        const boardArray = gameBoard.getGameArray();
+        for(const combination of winningCombinations){
+            if(!((boardArray[combination[0]]!== "")&&
+                (boardArray[combination[1]]!=="")&&
+                (boardArray[combination[2]]!==""))){ //Comprueba que la combinacion no este llena
+
+                if(boardArray[combination[0]]===boardArray[combination[1]]){
+                    if(boardArray[combination[0]] !== "")playNumber =  combination[2];
+                }
+                else if(boardArray[combination[0]] === boardArray[combination[2]]){
+                    if(boardArray[combination[0]] !== "")playNumber =  combination[1];
+                }
+                else if(boardArray[combination[1]]=== boardArray[combination[2]]){
+                    if(boardArray[combination[1]] !== "")playNumber =  combination[0];
+                }
+            }
+        }
+
+        const checkIndex = (numberIndex)=>{
+          return numberIndex === playNumber;
+        }
+        return playNumber === -1 ? randomComputerPlay(emptyOptions) : emptyOptions.findIndex(checkIndex);
+        
+    }
+
+    const getAvailablePlays = ()=>{
         const boardArray = gameBoard.getGameArray();    
         let emptyOptions = boardArray.map((option,index)=> {
             if(option ===""){
@@ -225,9 +274,7 @@ const gameController = ((player1,player2,gameBoard,displayController)=>{
             }
         });
         emptyOptions = emptyOptions.filter(tupla => tupla);
-        playNumber = Math.floor(Math.random() * emptyOptions.length);
-        playRoundPlayer(emptyOptions[playNumber]);
-        cellsEventManager.removeOneCellEvent(emptyOptions[playNumber]);
+        return emptyOptions;
     }
 
 
